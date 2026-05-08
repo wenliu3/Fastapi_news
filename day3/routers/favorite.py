@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from day3.config.db_config import get_db
-from day3.crud.favorite import favorite_status, add_news_favorite, remove_news_favorite, favorite_list
+from day3.crud.favorite import favorite_status, add_news_favorite, remove_news_favorite, favorite_list, \
+    clear_all_favorite
 from day3.models.users import User
 from day3.schemas.favorite import IsFavorite, FavoriteAddRequest, FavoriteListResponse
 from day3.utils.auth import get_current_user
@@ -52,3 +52,12 @@ async def get_favorite_list(
          "favorite_id": favorite_id} for news, favorite_time, favorite_id in fav_list]
     has_more = total > page * page_size
     return success_response(message="获取收藏列表成功", data=FavoriteListResponse(list=data, total=total, hasMore=has_more))
+
+@router.delete("/clear")
+async def clear_favorite(
+        user: User = Depends(get_current_user),
+        db: AsyncSession = Depends(get_db)
+):
+    result = await clear_all_favorite(db, user.id)
+    return success_response(message=f"清空成功{result}收藏")
+

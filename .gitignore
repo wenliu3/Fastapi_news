@@ -1,3 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 虚拟环境
+venv/
+.venv/
+env/
+
+# 数据库 (爬取数据不提交)
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+
+# IDE
 .idea/
-chroma_db/
-md5.text
+.vscode/
+*.swp
+*.swo
+*~
+
+# WorkBuddy
+.workbuddy/
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# 日志
+*.log
+
+# 旧版备份
+.backup/

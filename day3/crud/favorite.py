@@ -40,3 +40,9 @@ async def favorite_list(db: AsyncSession, user_id: int, page_size: int = 10, pag
                       .offset(skip).limit(page_size))
     result = await db.execute(favorite_query)
     return result.all(), total
+
+# 清空收藏列表
+async def clear_all_favorite(db: AsyncSession, user_id: int):
+    result = await db.execute(delete(Favorite).where(Favorite.user_id == user_id))
+    await db.commit()
+    return result.rowcount
