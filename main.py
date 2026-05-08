@@ -1,8 +1,12 @@
 from fastapi import FastAPI
-from day3.routers import news
+from day3.routers import news, users, favorite
 from fastapi.middleware.cors import CORSMiddleware
 
+from day3.utils.exception_handlers import register_exception_handlers
+
 app = FastAPI()
+# 异常处理
+register_exception_handlers(app)
 
 # 跨域问题配置
 app.add_middleware(
@@ -17,3 +21,5 @@ async def root():
     return {"message": "Hello World"}
 
 app.include_router(news.router)
+app.include_router(users.router)
+app.include_router(favorite.router)

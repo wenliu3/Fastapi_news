@@ -29,7 +29,7 @@ async def get_news_detail(db: AsyncSession, news_id: int):
 
 # 新闻浏览量
 async def update_news_views(db: AsyncSession, news_id: int):
-    result = update(News).where(News.id==news_id).values(views=News.views+1)
+    result = update(News).where(News.id==news_id).values(views = News.views + 1)
     news_views = await db.execute(result)
     await db.commit()
 
